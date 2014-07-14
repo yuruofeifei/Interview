@@ -13,7 +13,7 @@ public:
         }
         sort(v.begin(), v.end(), myfunction);
         int start = 0, end = numbers.size() - 1;
-        while (start <= end) {
+        while (start < end) {
             if (v[start].first + v[end].first == target) {
                 if (v[start].second < v[end].second) {
                     r.push_back(v[start].second); r.push_back(v[end].second);
