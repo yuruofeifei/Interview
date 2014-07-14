@@ -1,31 +1,16 @@
-class Solution {
-public:
-    bool isValid(string s) {
+bool isValid(string s) {
         vector<char> stack;
-        for (char c : s) {
-            if (c == '(' || c == '[' || c == '{') 
-                stack.push_back(c);
+        for (int i = 0; i < s.length(); i++) {
+            if (stack.size() == 0) stack.push_back(s[i]);
             else {
-                if (stack.empty()) {
-                    return false;
-                }
-                if (c == ')' && stack.back() == '(') {
+                char c = stack.back();
+                if ((s[i] == ')' && c == '(') 
+                || (s[i] == ']' && c == '[') 
+                || (s[i] == '}' && c == '{')) 
                     stack.pop_back();
-                }
-                else if (c == ']' && stack.back() == '[') {
-                    stack.pop_back();
-                }
-                else if (c == '}' && stack.back() == '{') {
-                    stack.pop_back();
-                }
-                else {
-                    return false;
-                }
+                else stack.push_back(s[i]);
             }
         }
-        if (stack.empty()) 
-            return true;
-        else 
-            return false;
+        if (stack.size() == 0) return 1;
+        return 0;
     }
-};
