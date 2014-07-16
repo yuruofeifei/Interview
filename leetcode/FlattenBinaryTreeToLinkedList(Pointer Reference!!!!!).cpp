@@ -27,3 +27,26 @@ public:
         return connect(root, l, r);
     }
 };
+
+class Solution {
+public:
+    void build(TreeNode *root, TreeNode *&tmp)
+    {
+        if(root)
+        {
+            build(root->right, tmp);
+            build(root->left, tmp);
+            
+            root->right=tmp;
+            tmp=root;
+            root->left=NULL;
+        }
+    }
+    void flatten(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        TreeNode *tmp=NULL;
+        build(root, tmp);
+        
+    }
+};
