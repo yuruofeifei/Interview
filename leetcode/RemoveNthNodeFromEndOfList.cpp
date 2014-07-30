@@ -8,7 +8,7 @@
  */
 class Solution {
 public:
-    ListNode *remove(ListNode *head, int n, int &i) {
+    /*ListNode *remove(ListNode *head, int n, int &i) {
         if (head == 0) {
             i = 0;
             return NULL;
@@ -17,9 +17,22 @@ public:
         i++;
         if (i == n) { head->next = NULL; return l;}
         else {head->next = l; return head;}
-    }
+    }*/
     ListNode *removeNthFromEnd(ListNode *head, int n) {
+        //int i = 0;
+        //return remove(head, n, i);
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *prev = dummy;
         int i = 0;
-        return remove(head, n, i);
+        while (head) {
+            if (i >= n) {
+                prev = prev->next;
+            }
+            head = head->next;
+            i++;
+        }
+        prev->next = prev->next->next;
+        return dummy->next;
     }
 };
