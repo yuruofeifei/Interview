@@ -10,23 +10,16 @@ class Solution {
 public:
     UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
         if (!node) return NULL;
-        unordered_map<int, UndirectedGraphNode *> hash;
-        queue<UndirectedGraphNode *> q;
-        UndirectedGraphNode *ret = new UndirectedGraphNode(node->label);
-        hash[node->label] = ret;
-        q.push(node);
+        unordered_map<int, UndirectedGraphNode *> map = {{node->label, new UndirectedGraphNode(node->label)}};
+        queue<UndirectedGraphNode *> q; q.push(node);
         while (!q.empty()) {
-            UndirectedGraphNode *n = q.front();
+            UndirectedGraphNode *t = q.front(), *r = map[t->label];
             q.pop();
-            UndirectedGraphNode *newNode = hash[n->label];
-            for (UndirectedGraphNode *adj : n->neighbors) {
-                if (hash.find(adj->label) == hash.end()) {
-                    hash[adj->label] = new UndirectedGraphNode(adj->label);
-                    q.push(adj);
-                }
-                newNode->neighbors.push_back(hash[adj->label]);
+            for (UndirectedGraphNode *n : t->neighbors) {
+                if (!map.count(n->label)) { map[n->label] = new UndirectedGraphNode(n->label); q.push(n); }
+                r->neighbors.push_back(map[n->label]);
             }
         }
-        return ret;
+        return map[node->label];
     }
 };
