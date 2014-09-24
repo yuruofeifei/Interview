@@ -1,13 +1,16 @@
 class Solution {
 public:
-    void generate(vector<string> &v, string s, int left, int right, int n) {
-        if (right == n) v.push_back(s);
-        if (left < n) generate(v, s + "(", left + 1, right, n);
-        if (left > right) generate(v, s + ")", left, right + 1, n);
+    void generate(int left, int n, string s, vector<string> &ret) {
+        if (n == 0) {
+            ret.push_back(s);
+            return ;
+        }
+        if (left < n) generate(left + 1, n, s + "(", ret);
+        if (left > 0) generate(left - 1, n - 1, s + ")", ret);
     }
     vector<string> generateParenthesis(int n) {
-        vector<string> v;
-        generate(v, "(", 1, 0, n);
-        return v;
+        vector<string> ret;
+        generate(0, n, "", ret);
+        return ret;
     }
 };
