@@ -1,21 +1,13 @@
 class Solution {
 public:
-    int search(int A[], int start, int end, int target) {
-        if (start > end) {
-            return start;
-        }
-        int mid = (start + end) / 2;
-        if (A[mid] == target) {
-            return mid;
-        }
-        else if (A[mid] > target) {
-            return search(A, start, mid - 1, target);
-        }
-        else {
-            return search(A, mid + 1, end, target);
-        }
-    }
     int searchInsert(int A[], int n, int target) {
-        return search(A, 0, n - 1, target);
+        int l = 0, r = n - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (A[mid] == target) return mid;
+            else if (A[mid] > target) r = mid - 1;
+            else l = mid + 1;
+        }
+        return l;
     }
 };
