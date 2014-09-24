@@ -12,31 +12,18 @@ public:
         if (!root) return;
         queue<TreeLinkNode *> q;
         q.push(root);
-        int remaining = 1;
-        int nextLevelCount = 0;
+        int current = 1, next = 0;
         TreeLinkNode *prev = NULL;
         while (!q.empty()) {
-            TreeLinkNode *n = q.front();
-            q.pop();
-            if (!prev) {
-                prev = n;
-            }
-            else {
-                prev->next = n;
-                prev = prev->next;
-            }
-            remaining --;
-            if (n->left) {
-                nextLevelCount ++;
-                q.push(n->left);
-            }
-            if (n->right) {
-                nextLevelCount ++;
-                q.push(n->right);
-            }
-            if (remaining == 0) {
-                remaining = nextLevelCount;
-                nextLevelCount = 0;
+            TreeLinkNode *n = q.front(); q.pop();
+            if (prev) prev->next = n;
+            prev = n;
+            current --;
+            if (n->left) {q.push(n->left); next++;}
+            if (n->right) {q.push(n->right); next++;}
+            if (current == 0) {
+                current = next;
+                next = 0;
                 prev = NULL;
             }
         }
